@@ -887,7 +887,7 @@ class GameView(context: Context) : View(context) {
             val r = 45f
             eggs.add(Egg(
                 Random.nextFloat() * (width - 2 * r) + r, -r,
-                Random.nextFloat() * 6f + 14f, r,
+                Random.nextFloat() * 4.5f + 10.5f, r,
                 Random.nextFloat() * 360f
             ))
         }
