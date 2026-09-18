@@ -882,17 +882,22 @@ class GameView(context: Context) : View(context) {
 
     private fun updatePlaying() {
         spawnTimer++
-        if (spawnTimer >= 40f) {
-            spawnTimer = 0f
-            val r = 45f
-            eggs.add(Egg(
-                Random.nextFloat() * (width - 2 * r) + r, -r,
-                Random.nextFloat() * 3f + 7f, r,
-                Random.nextFloat() * 360f
-            ))
-        }
-        moveEggs()
-        if (score >= BOSS_TRIGGER_SCORE) startBoss()
+    private fun updatePlaying() {
+    spawnTimer++
+    // Спавн нового яйца только когда предыдущее прошло половину пути
+    val canSpawn = eggs.isEmpty() || eggs.none { it.y < height * 0.4f }
+    if (spawnTimer >= 40f && canSpawn) {
+        spawnTimer = 0f
+        val r = 45f
+        val newX = Random.nextFloat() * (width - 2 * r) + r
+        eggs.add(Egg(
+            newX, -r,
+            Random.nextFloat() * 3f + 7f, r,
+            Random.nextFloat() * 360f
+        ))
+    }
+    moveEggs()
+    if (score >= BOSS_TRIGGER_SCORE) startBoss()
     }
 
     private fun startBoss() {
